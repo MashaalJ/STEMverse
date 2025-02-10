@@ -1,0 +1,13 @@
+{
+    "posts": [
+        {
+            "id": "1",
+            "title": "Getting Started with STEM Education",
+            "date": "2024-03-15",
+            "author": "John Doe",
+            "excerpt": "Learn about the fundamentals of STEM education...",
+            "image": "path/to/image.jpg",
+            "content": "path/to/post1.md"
+        }
+    ]
+} 

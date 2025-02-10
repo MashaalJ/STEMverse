@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - STEMverse</title>
+    <!-- Include the same head content as main page -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Lora:400,700|Hammersmith+One" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    
+    <style>
+        /* Copy your color palette and base styles */
+        :root {
+            --color-primary: #003c71;
+            --color-secondary: #2b7ebb;
+            --color-accent: #f7ba06;
+            --color-light: #f0f4f8;
+            --color-dark: #003c71;
+            --color-text: #e0e0e0;
+            --color-bright: #ff914d;
+        }
+
+        /* Blog post specific styles */
+        .blog-post-header {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            padding: 8rem 0 4rem;
+            margin-bottom: 2rem;
+        }
+
+        .blog-post-content {
+            background: var(--color-light);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .blog-post-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .blog-post-meta {
+            color: var(--color-secondary);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .blog-post-text {
+            color: var(--color-primary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the same navbar -->
+
+    <article class="blog-post">
+        <header class="blog-post-header text-center text-light">
+            <div class="container">
+                <h1 class="display-4">Successful Robotics Workshop at Local School</h1>
+                <div class="blog-post-meta justify-content-center">
+                    <span><i class="fas fa-user"></i> Mashaal Jawad</span>
+                    <span><i class="fas fa-calendar"></i> March 15, 2024</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="blog-post-content">
+                <img src="path/to/full-image.jpg" alt="Workshop in Action" class="blog-post-image">
+                <div class="blog-post-text">
+                    <!-- Full blog post content -->
+                    <p>Last week, we conducted an exciting robotics workshop where students learned about basic programming and robot assembly. The enthusiasm was contagious as young minds explored the world of robotics...</p>
+                    <!-- Add more paragraphs -->
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Include the same footer -->
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+</body>
+</html> 

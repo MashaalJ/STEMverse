@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>STEMverse - Immersive STEM Experiences</title>
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:400,700|Lora:400,700|Hammersmith+One"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <style>
+      /* Define our colour palette */
+      :root {
+        --color-primary: #003c71; /* your provided colour */
+        --color-secondary: #2b7ebb;
+        --color-accent: #f7ba06;
+        --color-light: #f0f4f8;
+        --color-dark: #003c71;
+        --color-text: #e0e0e0;
+        --color-bright: #ff914d;
+        /* Additional colors */
+        --color-gray: #2a2a2a;
+        --color-card-bg: #f0f4f8;
+      }
+      body {
+        font-family: 'Raleway', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: var(--color-dark);
+        color: var(--color-text);
+      }
+      /* Navigation */
+      .navbar {
+        background: var(--color-accent); /* Semi-transparent primary color */
+        backdrop-filter: blur(10px);
+      }
+      .navbar-brand {
+        color: #f0f4f8 !important;
+        font-weight: 900;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+      }
+      .navbar-brand img {
+        height: 40px;
+        margin-right: 10px;
+      }
+      .nav-link {
+        color: var(--color-light) !important;
+        font-weight: 700;
+      }
+      .nav-link:hover {
+        color: var(--color-primary) !important;
+      }
+      /* Hero Section */
+      .hero {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+      #heroCanvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        top: 30%;
+        transform: translateY(-50%);
+        color: var(--color-text);
+        padding: 0 15px;
+      }
+      .hero-content h1 {
+        font-size: 5rem;
+        font-weight: 700;
+      }
+      .hero-content p {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+      }
+      .hero-content .btn {
+        font-size: 1.2rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--color-accent);
+        color: #f0f4f8;
+      }
+      /* Section Headers */
+      .section-header {
+        margin: 4rem 0 2rem;
+        text-align: center;
+      }
+      .section-header h2 {
+        color: var(--color-accent);
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+      .section-header h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: var(--color-secondary);
+        border-radius: 2px;
+      }
+      .section-header p {
+        color: var(--color-secondary);
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+      /* About Section */
+      #about {
+        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+        padding: 4rem 0;
+        border-radius: 15px;
+        margin: 2rem auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+      #about img {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      /* Offerings Section */
+      .offerings {
+        background: var(--color-dark) !important;
+        position: relative;
+        overflow: hidden;
+        padding: 4rem 0;
+      }
+      .offerings .card {
+        background: var(--color-card-bg);
+        border: 1px solid rgba(43, 126, 187, 0.2);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        color: var(--color-text);
+      }
+      .offerings .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(43, 126, 187, 0.6);
+      }
+      .offerings .card img {
+        transition: transform 0.5s;
+      }
+      .offerings .card:hover img {
+        transform: scale(1.05);
+      }
+      .offerings .card-title {
+        color: var(--color-accent);
+        font-weight: 600;
+      }
+      .offerings .card-text {
+        color: #003c71;
+      }
+      /* Contact Section */
+      #contact {
+        background: linear-gradient(45deg, var(--color-light), var(--color-light));
+        color: var(--color-dark);
+        padding: 4rem 0;
+      }
+      #contact .section-header h2,
+      #contact .section-header p,
+      #contact h4,
+      #contact p,
+      #contact .text-primary,
+      #contact .text-dark {
+        color: var(--color-primary) !important;
+      }
+      #contact form .form-control {
+        background: var(--color-light);
+        border: 1px solid var(--color-primary);
+        color: var(--color-primary);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 60, 113, 0.1);
+      }
+      #contact form .form-control:focus {
+        background: var(--color-light);
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 0.2rem rgba(247, 186, 6, 0.25);
+      }
+      #contact form .form-control::placeholder {
+        color: var(--color-primary);
+        opacity: 0.7;
+      }
+      #contact form label {
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+      #contact form .btn {
+        background: var(--color-primary);
+        color: var(--color-light);
+        font-weight: 600;
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      #contact form .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 60, 113, 0.3);
+        background: var(--color-accent);
+        color: var(--color-primary);
+      }
+      /* Footer */
+      footer {
+        background: var(--color-dark);
+        color: var(--color-text);
+        padding: 2rem 0;
+        text-align: center;
+        border-top: 1px solid rgba(74, 144, 226, 0.2);
+      }
+      footer a {
+        color: var(--color-primary);
+      }
+      /* Update social links */
+      #contact .social-links a {
+        color: var(--color-primary) !important;
+      }
+      /* Impact Section */
+      .impact-card {
+        background: var(--color-light);
+        padding: 2rem;
+        border-radius: 10px;
+        transition: transform 0.3s;
+        color: var(--color-primary);
+      }
+      .impact-card:hover {
+        transform: translateY(-10px);
+      }
+      .impact-card h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--color-primary);
+      }
+      /* Testimonials Section */
+      .testimonial-card {
+        background: var(--color-light);
+        padding: 2rem;
+        border-radius: 10px;
+        height: 100%;
+        transition: transform 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 4;
+      }
+      .testimonial-card:hover {
+        transform: translateY(-5px);
+      }
+      .testimonial-content {
+        margin-bottom: 1.5rem;
+        color: var(--color-primary);
+      }
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .testimonial-author img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+      }
+      .testimonial-author h5 {
+        margin: 0;
+        color: var(--color-primary);
+      }
+      .testimonial-author p {
+        margin: 0;
+        color: var(--color-secondary);
+        font-size: 0.9rem;
+      }
+      /* Partners Ticker */
+      .partner-ticker {
+        overflow: hidden;
+        position: relative;
+        background: var(--color-light);
+        padding: 20px 0;
+        border-radius: 10px;
+      }
+
+      .ticker-wrap {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .ticker {
+        display: flex;
+        animation: ticker 30s linear infinite;
+        white-space: nowrap;
+      }
+
+      .ticker-item {
+        flex-shrink: 0;
+        width: 200px;
+        padding: 0 20px;
+      }
+
+      .ticker-item img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        filter: grayscale(100%);
+        transition: filter 0.3s;
+      }
+
+      .ticker-item:hover img {
+        filter: grayscale(0%);
+      }
+
+      @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+      }
+
+      /* SDG Cards */
+      .sdg-card {
+        background: var(--color-light);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .sdg-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .sdg-icon {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s;
+      }
+
+      .sdg-card:hover .sdg-icon {
+        transform: scale(1.1);
+      }
+
+      /* Gallery */
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .gallery-item img {
+        transition: transform 0.5s;
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        right: 0;
+        background: rgba(0, 60, 113, 0.9);
+        color: var(--color-light);
+        padding: 1rem;
+        transition: bottom 0.3s;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        bottom: 0;
+      }
+
+      /* Testimonials Section */
+      #testimonials {
+        overflow: hidden;
+        min-height: 600px;
+      }
+
+      #testimonialCanvas {
+        z-index: 1;
+      }
+
+      .testimonial-overlay {
+        background: rgba(0, 60, 113, 0.6);
+        z-index: 2;
+      }
+
+      #testimonials .container {
+        z-index: 3;
+      }
+
+      /* Update SDG text colors */
+      .sdg-card h3 {
+        color: var(--color-primary);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .sdg-card p {
+        color: var(--color-primary);
+        opacity: 0.9;
+      }
+
+      /* Add to your existing styles */
+      .contact-info {
+        background: var(--color-light);
+        padding: 2rem;
+        border-radius: 15px;
+        height: 100%;
+      }
+
+      .contact-info h4 {
+        color: var(--color-primary);
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .contact-info p {
+        color: var(--color-primary);
+        margin-bottom: 0;
+      }
+
+      .contact-info a {
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .contact-info a:hover {
+        color: var(--color-accent);
+      }
+
+      .social-icon {
+        color: var(--color-primary);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(0, 60, 113, 0.1);
+      }
+
+      .social-icon:hover {
+        color: var(--color-accent);
+        transform: translateY(-5px);
+        background: rgba(0, 60, 113, 0.15);
+      }
+
+      .info-item {
+        padding-left: 1rem;
+        border-left: 3px solid var(--color-accent);
+      }
+
+      /* Add to your existing styles */
+      .card-action ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 1rem;
+        color: var(--color-primary);
+      }
+
+      .card-action li {
+        margin-bottom: 0.5rem;
+        color: var(--color-primary);
+        font-weight: 500;
+      }
+
+      .card-action .btn-primary {
+        background-color: var(--color-accent);
+        border: none;
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+
+      .card-action .btn-primary:hover {
+        background-color: var(--color-dark);
+        color: var(--color-light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Update CTA section styles */
+      .cta-section {
+        background-color: var(--color-light) !important;
+      }
+
+      .cta-section h2 {
+        color: var(--color-primary);
+        font-weight: 700;
+      }
+
+      .cta-section .lead {
+        color: var(--color-primary);
+      }
+
+      .cta-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .cta-card h3 {
+        color: var(--color-primary);
+        margin: 1rem 0;
+      }
+
+      .cta-card p {
+        color: var(--color-primary);
+        margin-bottom: 1.5rem;
+      }
+
+      .cta-card .btn-primary {
+        background-color: var(--color-accent);
+        border: none;
+        color: var(--color-primary);
+        font-weight: 600;
+        padding: 0.8rem 2rem;
+        transition: all 0.3s ease;
+      }
+
+      .cta-card .btn-primary:hover {
+        background-color: var(--color-dark);
+        color: var(--color-light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Update card text color */
+      .card-text {
+        color: var(--color-primary);
+      }
+
+      /* Workbook Preview Styles */
+      .workbook-preview {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .workbook-preview-image {
+        position: relative;
+        padding: 20px;
+      }
+
+      .ar-indicator {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: var(--color-accent);
+        color: var(--color-primary);
+        padding: 1rem;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .new-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--color-accent);
+        color: var(--color-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        z-index: 2;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+      }
+
+      .feature-item i {
+        color: var(--color-accent);
+      }
+
+      .btn-accent {
+        background: var(--color-accent);
+        color: var(--color-primary);
+        font-weight: 600;
+        padding: 0.8rem 2rem;
+      }
+
+      .btn-accent:hover {
+        background: var(--color-light);
+        color: var(--color-primary);
+        transform: translateY(-2px);
+      }
+
+      .domains-universe {
+        background: var(--color-dark);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .solar-system {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .sun {
+        width: 100px;
+        height: 100px;
+        background: var(--color-accent);
+        border-radius: 50%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 50px var(--color-accent);
+        z-index: 2;
+      }
+
+      .sun span {
+        color: var(--color-primary);
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+
+      .orbit {
+        position: absolute;
+        border: 1px solid rgba(247, 186, 6, 0.2);
+        border-radius: 50%;
+        animation: rotate 20s linear infinite;
+      }
+
+      .orbit-1 { width: 200px; height: 200px; animation-duration: 15s; }
+      .orbit-2 { width: 300px; height: 300px; animation-duration: 20s; }
+      .orbit-3 { width: 400px; height: 400px; animation-duration: 25s; }
+      .orbit-4 { width: 500px; height: 500px; animation-duration: 30s; }
+
+      .planet {
+        width: 80px;
+        height: 80px;
+        background: var(--color-light);
+        border-radius: 50%;
+        position: absolute;
+        top: -40px;
+        left: calc(50% - 40px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .planet:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 30px var(--color-accent);
+      }
+
+      .planet-content {
+        text-align: center;
+        color: var(--color-primary);
+      }
+
+      .planet-content i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .planet-content h3 {
+        font-size: 0.8rem;
+        margin: 0;
+      }
+
+      .planet-info {
+        position: absolute;
+        background: var(--color-light);
+        padding: 1rem;
+        border-radius: 10px;
+        width: 200px;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 3;
+      }
+
+      .planet:hover .planet-info {
+        opacity: 1;
+        visibility: visible;
+        top: 120%;
+      }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      /* Add some stars in the background */
+      .domains-universe::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle at center, white 1px, transparent 1px);
+        background-size: 50px 50px;
+        opacity: 0.1;
+      }
+
+      /* Update card styles to handle the badge */
+      .card {
+        overflow: visible !important;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        height: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--color-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: var(--color-accent);
+        font-size: 2rem;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover .feature-icon {
+        background: var(--color-accent);
+        color: var(--color-primary);
+        transform: rotateY(180deg);
+      }
+
+      .feature-card h3 {
+        color: var(--color-primary);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .feature-card p {
+        color: var(--color-primary);
+        opacity: 0.9;
+        font-size: 0.95rem;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="https://lh3.googleusercontent.com/pw/AP1GczM44xVyZr1Y2k-D3U0LMXOxx5eVekNTYQu4tQR3SaOnr3MKnfjANq9vvLiYI1hGFDChtP2e-pgSdQCSjLiTMrmteZkzU3gH7hDaXB2gE_t5fBh3TUJwgyrOMTnF485pKbNlSqnfl4BJcDW4gsKgygif=w500-h500-s-no-gm?authuser=0" alt="STEMverse Logo">
+          STEMverse
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#offerings">Offerings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="kits.html">Hardware Kits</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blogs</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section with Three.js Interactive Background -->
+    <header class="hero">
+      <canvas id="heroCanvas"></canvas>
+      <div class="hero-overlay"></div>
+      <div class="hero-content container" data-aos="fade-up">
+        <h1>Empowering Tomorrow's Innovators through STEM</h1>
+        <p class="lead">
+            We turn curiosity into real skills through hands-on STEM learning. Grow into confident problem-solvers and future innovators.
+        </p>
+        <a href="#offerings" class="btn btn-lg btn-primary"
+          >Explore Our Services</a
+        >
+
+      </div>
+    </header>
+
+    <!-- About Us Section -->
+    <section id="about" class="container" data-aos="fade-up">
+      <div class="section-header">
+        <h2>About Us</h2>
+        <p>Who We Are &amp; Our Vision</p>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <img
+            src="https://lh3.googleusercontent.com/pw/AP1GczMvdodYRXGAURCLgPYZ_8f7nR_JEmuyBakaMiW8JYANy1YdvvOAUCgPfJjBHZcdR_L1UoDk75z_derug_jPVlCgzQlRG2p8yzdWJkcSiyrNs9ILB294n9NlHVxrBWsYugukycZSMLHLyG6132d_zOWE=w1324-h884-s-no-gm"
+            alt="About STEMverse"
+            class="img-fluid"
+          />
+        </div>
+        <div class="col-md-6">
+          <p>
+            At STEMverse, we make STEM learning exciting and practical. Our programs help students develop essential skills like problem-solving, critical thinking, and creativity while working with real technology. We believe every child has the potential to be an innovator - they just need the right tools and guidance.
+          </p>
+          <p>
+            With a passion for excellence and a commitment to progress, we strive
+            to create an environment where innovation thrives and dreams become
+            reality.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Add this after the About section -->
+    <section class="domains-universe py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2>Explore Our STEM Universe</h2>
+                <p>Journey through the domains of knowledge</p>
+            </div>
+            <div class="solar-system" data-aos="fade-up">
+                <div class="sun">
+                    <span>STEM</span>
+                </div>
+                <div class="orbit orbit-1">
+                    <div class="planet planet-1">
+                        <div class="planet-content">
+                            <i class="fas fa-microchip"></i>
+                            <h3>Computing</h3>
+                            <div class="planet-info">
+                                <p>Programming • Robotics • AI</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="orbit orbit-2">
+                    <div class="planet planet-2">
+                        <div class="planet-content">
+                            <i class="fas fa-cogs"></i>
+                            <h3>Engineering</h3>
+                            <div class="planet-info">
+                                <p>Design • Electronics • Mechanics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="orbit orbit-3">
+                    <div class="planet planet-3">
+                        <div class="planet-content">
+                            <i class="fas fa-atom"></i>
+                            <h3>Science</h3>
+                            <div class="planet-info">
+                                <p>Physics • Chemistry • Biology</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="orbit orbit-4">
+                    <div class="planet planet-4">
+                        <div class="planet-content">
+                            <i class="fas fa-calculator"></i>
+                            <h3>Mathematics</h3>
+                            <div class="planet-info">
+                                <p>Logic • Problem Solving • Analytics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>
+              STEM is the engine of modern innovation—it equips us with the tools to understand our world, solve complex problems, and create the technologies that shape our future. At its core, STEM integrates science, technology, engineering, and mathematics into a cohesive framework that encourages exploration, critical thinking, and creative problem solving. STEM not only delves into the theoretical underpinnings of natural phenomena but also emphasizes practical, hands-on applications across a broad range of domains—from robotics, coding, and renewable energy to biomedical engineering and data science. In this expansive ecosystem, STEMverse covers every facet of these disciplines, providing a platform that connects theoretical principles with real-world applications.
+            </p>
+        </div>
+    </section>
+
+
+<!-- Add after the About section -->
+<section class="why-choose section-light py-5">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>Why Choose STEMverse?</h2>
+            <p>Transforming Education for Tomorrow's Innovators</p>
+        </div>
+        <div class="row g-4">
+            <!-- Innovative & Cutting-Edge -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Innovative Approach</h3>
+                    <p>State-of-the-art educational experiences using cutting-edge technology and research-backed methods.</p>
+                </div>
+            </div>
+
+            <!-- Immersive & Experiential -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3>Immersive Learning</h3>
+                    <p>Hands-on, interactive experiences that go beyond traditional classroom instruction.</p>
+                </div>
+            </div>
+
+            <!-- Future-Ready -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Future-Ready Skills</h3>
+                    <p>Preparing learners for tomorrow's challenges with next-generation STEM education.</p>
+                </div>
+            </div>
+
+            <!-- Real-World Applications -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Real-World Impact</h3>
+                    <p>Apply learning directly to real projects and practical challenges.</p>
+                </div>
+            </div>
+
+            <!-- Collaborative & Inclusive -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Inclusive Community</h3>
+                    <p>A supportive environment where every learner thrives through collaboration.</p>
+                </div>
+            </div>
+
+            <!-- Holistic & Comprehensive -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h3>Comprehensive Learning</h3>
+                    <p>Integrated approach covering all STEM disciplines from theory to practice.</p>
+                </div>
+            </div>
+
+            <!-- Transformative & Empowering -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Empowering Growth</h3>
+                    <p>Transform thinking and build confidence through hands-on achievement.</p>
+                </div>
+            </div>
+
+            <!-- Adaptive & Personalized -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Personalized Path</h3>
+                    <p>Programs adapted to individual learning styles and goals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Offerings Section -->
+    <section id="offerings" class="py-5 offerings bg-light" data-aos="fade-up">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Offerings</h2>
+          <p>Innovative Solutions Tailored for You</p>
+        </div>
+        <div class="row g-4">
+          <!-- STEM as a Service -->
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="text-center pt-4">
+                <i class="fas fa-cogs fa-4x" style="color: var(--color-accent)"></i>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">STEM as a Service</h5>
+                <p class="card-text">
+                  We bring complete STEM programs to your school or organization. Our hands-on activities get students excited about learning while building real-world skills.
+                </p>
+                <div class="card-action mt-3">
+                  <a href="#contact" class="btn btn-primary">Learn More</a>
+                  <ul class="mt-3">
+                    <li>✓ Customized for your needs</li>
+                    <li>✓ All equipment provided</li>
+                    <li>✓ Expert instructors</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="text-center pt-4">
+                <i class="fas fa-chalkboard-teacher fa-4x" style="color: var(--color-accent)"></i>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Training of Trainers</h5>
+                <p class="card-text">
+                  Empowering educators and professionals with the latest STEM methodologies and practical training.
+                </p>
+                 <div class="card-action mt-3">
+                  <a href="#contact" class="btn btn-primary">Learn More</a>
+                  <ul class="mt-3">
+                    <li>✓ Customized for your needs</li>
+                    <li>✓ All equipment provided</li>
+                    <li>✓ Expert instructors</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="text-center pt-4">
+                <i class="fas fa-book-open fa-4x" style="color: var(--color-accent)"></i>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Curriculum Development</h5>
+                <p class="card-text">
+                  Designing engaging and future‑proof STEM curricula that meet the needs of today's learners.
+                </p>
+                <div class="card-action mt-3">
+                  <a href="#contact" class="btn btn-primary">Learn More</a>
+                  <ul class="mt-3">
+                    <li>✓ Customized Curriculum</li>
+                    <li>✓ All Resources provided</li>
+                    <li>✓ Aligned with Single National Curriculum</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="text-center pt-4">
+                <i class="fas fa-microchip fa-4x" style="color: var(--color-accent)"></i>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Hardware Kits</h5>
+                <p class="card-text">
+                  Innovative, ready‑to‑use hardware kits that foster hands‑on learning and experimentation.
+                </p>
+<div class="card-action mt-3">
+                  <a href="kits.html" class="btn btn-primary">Explore Kits</a>
+                  <ul class="mt-3">
+                    <li>✓ State of the Art learning tools</li>
+                    <li>✓ Tutorial Resources provided</li>
+                    <li>✓ Encourage creativity and innovation at home!</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="text-center pt-4">
+                <i class="fas fa-tools fa-4x" style="color: var(--color-accent)"></i>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Makerspace Creation</h5>
+                <p class="card-text">
+                  Building collaborative spaces that inspire creativity, innovation, and community engagement.
+                </p>
+                <div class="card-action mt-3">
+                  <a href="#contact" class="btn btn-primary">Learn More</a>
+                  <ul class="mt-3">
+                    <li>✓ State of the Art Collaborative space</li>
+                    <li>✓ Complete Makerspace Setup with Equipment and Resources</li>
+                    
+                  </ul>
+            </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="text-center pt-4">
+                <i class="fas fa-laptop-code fa-4x" style="color: var(--color-accent)"></i>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">STEM Bootcamps &amp; Workshops</h5>
+                <p class="card-text">
+                  Immersive, short‑term programs that deliver intensive STEM learning experiences in a dynamic environment.
+                </p>
+                <div class="card-action mt-3">
+                  <a href="#contact" class="btn btn-primary">Learn More</a>
+                  <ul class="mt-3">
+                    <li>✓ Introductory Workshops</li>
+                    <li>✓ Building Blocks of STEM</li>
+                    <li>✓ Hands-On Learning</li>
+                  </ul>
+              </div>
+            </div>
+            </div>
+          </div> 
+          
+          <!-- Add this card to the Offerings section -->
+          
+          <div class="col-md-4">
+            <div class="card h-100 position-relative">
+                <div class="new-badge">Coming Soon</div>
+                <div class="text-center pt-4">
+                    <i class="fas fa-book-open fa-4x" style="color: var(--color-accent)"></i>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Interactive STEM Workbook</h5>
+                    <p class="card-text">
+                        A revolutionary learning experience combining traditional workbook with Augmented Reality. Perfect for schools and home learning.
+                    </p>
+                    <div class="card-action mt-3">
+                        <a href="#contact" class="btn btn-primary">Pre-order Now</a>
+                        <ul class="mt-3">
+                            <li>✓ Interdisciplinary STEM approach</li>
+                            <li>✓ AR-enhanced learning</li>
+                            <li>✓ Aligned with curriculum standards</li>
+                            <li>✓ Parent/Teacher guide included</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add this new section -->
+    <section class="workbook-preview section-gradient py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2 class="text-light mb-4">Introducing STEMverse Workbook</h2>
+                    <p class="text-light mb-4">Experience STEM learning like never before with our innovative workbook that brings concepts to life through Augmented Reality.</p>
+                    <div class="features-list text-light mb-4">
+                        <div class="feature-item mb-3">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Holistic interdisciplinary approach
+                        </div>
+                        <div class="feature-item mb-3">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Interactive AR experiences
+                        </div>
+                        <div class="feature-item mb-3">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Comprehensive curriculum integration
+                        </div>
+                        <div class="feature-item mb-3">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Step-by-step guidance for parents and teachers
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <a href="#contact" class="btn btn-accent">Pre-order Now</a>
+                        <a href="#" class="btn btn-outline-light">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="workbook-preview-image">
+                        <img src="path/to/workbook-preview.png" alt="STEM Workbook Preview" class="img-fluid rounded-3">
+                        <div class="ar-indicator">
+                            <i class="fas fa-vr-cardboard fa-2x mb-2"></i>
+                            <span>AR Enhanced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add this after the Offerings section -->
+    <section class="cta-section py-5 bg-light">
+        <div class="container text-center">
+            <h2>Ready to Start Your STEM Journey?</h2>
+            <p class="lead mb-4">Book a free consultation to discuss how we can help your children or students succeed in STEM</p>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="cta-card mb-4">
+                        <i class="fas fa-school fa-3x mb-3" style="color: var(--color-accent)"></i>
+                        <h3>For Schools</h3>
+                        <p>Bring STEM programs to your school</p>
+                        <a href="#contact" class="btn btn-primary">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cta-card mb-4">
+                        <i class="fas fa-home fa-3x mb-3" style="color: var(--color-accent)"></i>
+                        <h3>For Parents</h3>
+                        <p>Give your child the STEM advantage</p>
+                        <a href="#contact" class="btn btn-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add before the testimonials section -->
+    <section class="success-metrics py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h3>95%</h3>
+                        <p>of students show improved problem-solving skills</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h3>600+</h3>
+                        <p>students trained in STEM skills</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h3>10+</h3>
+                        <p>partner institutions</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <h3>100%</h3>
+                        <p>satisfaction rate from parents</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="py-5" data-aos="fade-up">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Impact</h2>
+          <p>Making a Difference in STEM Education</p>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="impact-card">
+              <i class="fas fa-users fa-3x mb-3" style="color: var(--color-accent)"></i>
+              <h3 class="counter">600+</h3>
+              <p>Students Impacted</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="impact-card">
+              <i class="fas fa-school fa-3x mb-3" style="color: var(--color-accent)"></i>
+              <h3 class="counter">10+</h3>
+              <p>Partner Institutions</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="impact-card">
+              <i class="fas fa-laptop-code fa-3x mb-3" style="color: var(--color-accent)"></i>
+              <h3 class="counter">15+</h3>
+              <p>Workshops Conducted</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="impact-card">
+              <i class="fas fa-globe fa-3x mb-3" style="color: var(--color-accent)"></i>
+              <h3 class="counter">10+</h3>
+              <p>Cities Reached</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partners Ticker Section -->
+    <section class="partners-section py-4">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Partners</h2>
+                <p>Collaborating for Innovation</p>
+            </div>
+            <div class="partner-ticker">
+                <div class="ticker-wrap">
+                    <div class="ticker">
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczPPmr3KOvRrHXkS4yXnVHsCm4vFpiM_Qx1TTuGVNKVfZWkesRsHrKxGFnUz4BNxTrW6g8yw4yJ_EYHHBvMv4VgBfyFPBVGQHUAHBGWXjlnVZS-Hs_4=" alt="Partner 1">
+                        </div>
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczMQJmpm1Kl_m8_kghzZhK1SqkWQYG4nIF-_IvVqOZhb6bAIFcwx_AAJc-_hYeYWozaGhzF9jYFPBjY-3VHZQ4c=" alt="Partner 2">
+                        </div>
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNGrV4KnmAJ4Z4JQhJZ5KY_X-Qx8kYqGKY=" alt="Partner 3">
+                        </div>
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNGrV4KnmAJ4Z4JQhJZ5KY_X-Qx8kYqGKY=" alt="Partner 4">
+                        </div>
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNGrV4KnmAJ4Z4JQhJZ5KY_X-Qx8kYqGKY=" alt="Partner 5">
+                        </div>
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNGrV4KnmAJ4Z4JQhJZ5KY_X-Qx8kYqGKY=" alt="Partner 6">
+                        </div>
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNGrV4KnmAJ4Z4JQhJZ5KY_X-Qx8kYqGKY=" alt="Partner 7">
+                        </div>
+                        <div class="ticker-item">
+                            <img src="https://lh3.googleusercontent.com/pw/AP1GczNGrV4KnmAJ4Z4JQhJZ5KY_X-Qx8kYqGKY=" alt="Partner 8">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SDG Goals Section -->
+    <section class="sdg-section py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Impact on SDGs</h2>
+                <p>Contributing to Sustainable Development Goals</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="sdg-card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-04.jpg" alt="SDG 4" class="sdg-icon">
+                        <h3>Quality Education</h3>
+                        <p>Ensuring inclusive and equitable quality education and promoting lifelong learning opportunities for all.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="sdg-card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-09.jpg" alt="SDG 9" class="sdg-icon">
+                        <h3>Industry, Innovation and Infrastructure</h3>
+                        <p>Building resilient infrastructure, promoting inclusive and sustainable industrialization.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="sdg-card">
+                        <img src="https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-05.jpg" alt="SDG 5" class="sdg-icon">
+                        <h3>Gender Equality</h3>
+                        <p>Achieving gender equality and empowering all women and girls in STEM fields.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2>Gallery</h2>
+                <p>Moments from Our Journey</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="zoom-in">
+                    <div class="gallery-item">
+                        <img src="path/to/workshop1.jpg" alt="Workshop Image" class="img-fluid">
+                        <div class="gallery-overlay">
+                            <p>Workshop at Local School</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="gallery-item">
+                        <img src="path/to/robotics1.jpg" alt="Robotics Session" class="img-fluid">
+                        <div class="gallery-overlay">
+                            <p>Robotics Learning Session</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="gallery-item">
+                        <img src="path/to/makerspace1.jpg" alt="Makerspace" class="img-fluid">
+                        <div class="gallery-overlay">
+                            <p>Makerspace Activities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5 position-relative" data-aos="fade-up">
+      <!-- Add canvas for particle effect -->
+      <canvas id="testimonialCanvas" class="position-absolute top-0 start-0 w-100 h-100"></canvas>
+      <div class="testimonial-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+      <div class="container position-relative">
+        <div class="section-header">
+          <h2>What People Say</h2>
+          <p>Testimonials from Our Community</p>
+        </div>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="testimonial-card">
+                    <div class="testimonial-content">
+                      <i class="fas fa-quote-left mb-3" style="color: var(--color-accent)"></i>
+                      <p>"STEMverse has transformed how my son approaches learning. Even as parents and adults it was a whole new experience for us."</p>
+                    </div>
+                    <div class="testimonial-author">
+                      
+                      <div>
+                        <h5>Atif</h5>
+                        <p>Parent</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="testimonial-card">
+                    <div class="testimonial-content">
+                      <i class="fas fa-quote-left mb-3" style="color: var(--color-accent)"></i>
+                      <p>"STEMverse taught me about App development and now that's what I want to be in the future."</p>
+                    </div>
+                    <div class="testimonial-author">
+                      
+                      <div>
+                        <h5>Shaheer</h5>
+                        <p>Aged 10</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="testimonial-card">
+                    <div class="testimonial-content">
+                      <i class="fas fa-quote-left mb-3" style="color: var(--color-accent)"></i>
+                      <p>"I wanted to aplaud your efforts, I am very satisfied with your services."</p>
+                    </div>
+                    <div class="testimonial-author">
+                    
+                      <div>
+                        <h5>Aminah </h5>
+                        <p>Parent</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="testimonial-card">
+                    <div class="testimonial-content">
+                      <i class="fas fa-quote-left mb-3" style="color: var(--color-accent)"></i>
+                      <p>"I LOVE STEM CLASS!."</p>
+                    </div>
+                    <div class="testimonial-author">
+                      
+                      <div>
+                        <h5>Almir</h5>
+                        <p>Aged 5</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Add more testimonials as needed -->
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" data-aos="fade-up" class="py-5 bg-white">
+      <div class="container">
+        <div class="section-header">
+          <h2>Get in Touch</h2>
+          <p>Connect with us</p>
+        </div>
+        <div class="row">
+          <!-- Contact Form Column -->
+          <div class="col-lg-7 mb-4">
+            <form action="https://formspree.io/f/xleqoawb" method="post">
+              <div class="mb-3">
+                <label for="contact-name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  id="contact-name"
+                  name="name"
+                  class="form-control"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="contact-email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  id="contact-email"
+                  name="_replyto"
+                  class="form-control"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="contact-message" class="form-label">Message</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="4"
+                  class="form-control"
+                  placeholder="Your Message"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+          
+          <!-- Contact Info & Social Links Column -->
+          <div class="col-lg-5">
+            <div class="contact-info">
+              <div class="info-item mb-4">
+                <h4><i class="fas fa-map-marker-alt me-2"></i>Location</h4>
+                <p>NIC Peshawar, Pakistan</p>
+              </div>
+              <div class="info-item mb-4">
+                <h4><i class="fas fa-envelope me-2"></i>Email</h4>
+                <p><a href="mailto:stemverse.co@gmail.com">stemverse.co@gmail.com</a></p>
+              </div>
+              <div class="info-item mb-4">
+                <h4><i class="fas fa-phone me-2"></i>Phone</h4>
+                <p><a href="tel:+923009575725">+92 300 9575725</a></p>
+              </div>
+              
+              <!-- Social Media Links -->
+              <div class="social-links mt-5">
+                <h4>Follow Us</h4>
+                <div class="d-flex gap-3 mt-3">
+                  <a href="https://instagram.com/your_handle" target="_blank" class="social-icon">
+                    <i class="fab fa-instagram fa-2x"></i>
+                  </a>
+                  <a href="https://facebook.com/your_page" target="_blank" class="social-icon">
+                    <i class="fab fa-facebook fa-2x"></i>
+                  </a>
+                  <a href="https://linkedin.com/company/your_company" target="_blank" class="social-icon">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                  </a>
+                  <a href="https://tiktok.com/@your_account" target="_blank" class="social-icon">
+                    <i class="fab fa-tiktok fa-2x"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 STEMverse. </p>
+        <p>All Rights Reserved Across the Multiverse.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- VanillaTilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS for Three.js Background & Interactivity -->
+    <script>
+      // Initialize AOS for scroll animations
+      AOS.init({
+        duration: 800,
+        
+      });
+
+      // Three.js Scene Setup
+      let scene, camera, renderer, particles, connections;
+      const canvas = document.getElementById("heroCanvas");
+      const particlesData = [];
+
+      function initThree() {
+        scene = new THREE.Scene();
+        const aspect = window.innerWidth / window.innerHeight;
+        camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+        camera.position.z = 50;
+
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Create network of particles
+        const particleCount = 200;
+        const positions = new Float32Array(particleCount * 3);
+        const geometry = new THREE.BufferGeometry();
+        const material = new THREE.PointsMaterial({
+          color: getComputedStyle(document.documentElement)
+            .getPropertyValue("--color-light")
+            .trim() || "#f7ba06",
+          size: 0.5,
+          transparent: true,
+          opacity: 1.0,
+        });
+
+        // Create random positions for particles within a cube
+        for (let i = 0; i < particleCount; i++) {
+          const x = Math.random() * 100 - 50;
+          const y = Math.random() * 100 - 50;
+          const z = Math.random() * 100 - 50;
+
+          positions[i * 3] = x;
+          positions[i * 3 + 1] = y;
+          positions[i * 3 + 2] = z;
+
+          // Store particle data for animation
+          particlesData.push({
+            velocity: new THREE.Vector3(
+              Math.random() * 0.2 - 0.1,
+              Math.random() * 0.2 - 0.1,
+              Math.random() * 0.2 - 0.1
+            ),
+            numConnections: 0
+          });
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        // Create lines for connections
+        const lineGeometry = new THREE.BufferGeometry();
+        const lineMaterial = new THREE.LineBasicMaterial({
+          color: getComputedStyle(document.documentElement)
+            .getPropertyValue("--color-primary")
+            .trim() || "#003c71",
+          transparent: true,
+          opacity: 0.2,
+        });
+        connections = new THREE.LineSegments(lineGeometry, lineMaterial);
+        scene.add(connections);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
+
+        window.addEventListener("resize", onWindowResize, false);
+      }
+
+      function onWindowResize() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const positions = particles.geometry.attributes.position.array;
+        const linePositions = [];
+        
+        // Update particle positions
+        for (let i = 0; i < positions.length; i += 3) {
+          positions[i] += particlesData[i/3].velocity.x;
+          positions[i + 1] += particlesData[i/3].velocity.y;
+          positions[i + 2] += particlesData[i/3].velocity.z;
+
+          // Bounce off boundaries
+          if (Math.abs(positions[i]) > 50) particlesData[i/3].velocity.x *= -1;
+          if (Math.abs(positions[i + 1]) > 50) particlesData[i/3].velocity.y *= -1;
+          if (Math.abs(positions[i + 2]) > 50) particlesData[i/3].velocity.z *= -1;
+
+          // Create connections between nearby particles
+          for (let j = i + 3; j < positions.length; j += 3) {
+            const dx = positions[i] - positions[j];
+            const dy = positions[i + 1] - positions[j + 1];
+            const dz = positions[i + 2] - positions[j + 2];
+            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist < 20) {
+              linePositions.push(
+                positions[i], positions[i + 1], positions[i + 2],
+                positions[j], positions[j + 1], positions[j + 2]
+              );
+            }
+          }
+        }
+
+        // Update particles and connections
+        particles.geometry.attributes.position.needsUpdate = true;
+        connections.geometry.setAttribute('position', 
+          new THREE.Float32BufferAttribute(linePositions, 3));
+
+        // Rotate entire scene slightly
+        scene.rotation.y += 0.001;
+        scene.rotation.x += 0.0005;
+
+        renderer.render(scene, camera);
+      }
+
+      initThree();
+      animate();
+      // Initialize VanillaTilt on all offering cards for subtle 3D hover effects
+      VanillaTilt.init(document.querySelectorAll(".offerings .card"), {
+        max: 15,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.2,
+      });
+    </script>
+    <!-- Font Awesome for icons -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+      integrity="sha512-KFK5R8KveYoM5YVbXg6KdN0uGCRBpXKf8PErKfRUR2dKzTzB9GFOUzswhd3f9SkV30eRvCuplMB8PpUjKn0N0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- Background animation for offerings section -->
+    <script>
+    function createOfferingsBackground() {
+      const section = document.querySelector('.offerings');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      canvas.style.position = 'absolute';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.opacity = '0.3';
+      canvas.style.pointerEvents = 'none';
+      
+      section.style.position = 'relative';
+      section.insertBefore(canvas, section.firstChild);
+
+      function resizeCanvas() {
+        canvas.width = section.offsetWidth;
+        canvas.height = section.offsetHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const particles = [];
+      const particleCount = 50;
+
+      // Create particles
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 2 + 1,
+          speedX: Math.random() * 2 - 1,
+          speedY: Math.random() * 2 - 1,
+          color: i % 2 === 0 ? '#2b7ebb' : '#f7ba06'
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(particle => {
+          particle.x += particle.speedX;
+          particle.y += particle.speedY;
+
+          // Bounce off walls
+          if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+          if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+
+          // Draw particle
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+          ctx.fillStyle = particle.color;
+          ctx.fill();
+
+          // Draw connections
+          particles.forEach(otherParticle => {
+            const dx = particle.x - otherParticle.x;
+            const dy = particle.y - otherParticle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 100) {
+              ctx.beginPath();
+              ctx.strokeStyle = particle.color;
+              ctx.globalAlpha = (100 - distance) / 1000;
+              ctx.lineWidth = 1;
+              ctx.moveTo(particle.x, particle.y);
+              ctx.lineTo(otherParticle.x, otherParticle.y);
+              ctx.stroke();
+              ctx.globalAlpha = 1;
+            }
+          });
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    createOfferingsBackground();
+    </script>
+    <!-- Add this before the closing </body> tag -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    function animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 50; // Adjust speed by changing divisor
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current) + '+';
+        }, 30);
+    }
+
+    // Start animation when element comes into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.textContent);
+                animateCounter(entry.target, target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    // Observe all counter elements
+    document.querySelectorAll('.counter').forEach(counter => {
+        observer.observe(counter);
+    });
+    </script>
+    <script>
+    // Duplicate ticker items for continuous scroll
+    function duplicateTickerItems() {
+        const ticker = document.querySelector('.ticker');
+        const items = ticker.innerHTML;
+        ticker.innerHTML = items + items; // Duplicate content
+    }
+
+    // Call after page loads
+    window.addEventListener('load', duplicateTickerItems);
+    </script>
+    <script>
+    // Add after your existing scripts
+    function initTestimonialBackground() {
+        const canvas = document.getElementById('testimonialCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 250;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3 + 1,
+                speedX: Math.random() * 2 - 1,
+                speedY: Math.random() * 2 - 1,
+                opacity: Math.random() * 0.5 + 0.5,
+                color: i % 2 === 0 ? '#4a90e2' : '#f7ba06'
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+
+                if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+                if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.globalAlpha = particle.opacity;
+                ctx.fill();
+
+                particles.forEach(otherParticle => {
+                    const dx = particle.x - otherParticle.x;
+                    const dy = particle.y - otherParticle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = particle.color;
+                        ctx.globalAlpha = ((100 - distance) / 1000) * particle.opacity;
+                        ctx.lineWidth = 2;
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(otherParticle.x, otherParticle.y);
+                        ctx.stroke();
+                    }
+                });
+                ctx.globalAlpha = 1;
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
+
+    // Call after page loads
+    window.addEventListener('load', initTestimonialBackground);
+    </script>
+  </body>
+</html>
